@@ -6,4 +6,8 @@ import (
 
 func main() {
 	fmt.Println("Привет гитхаб!")
+
+	for i := 0; i < 10; i++ {
+		fmt.Println(i, "Ростем")
+	}
 }
