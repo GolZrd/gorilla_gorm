@@ -1,0 +1,24 @@
+{{define "base"}}
+<!DOCTYPE html>
+<html lang='ru'>
+    <head>
+        <meta charset='utf-8'>
+        <title>{{template "title" .}} - Те самые заметки</title>
+    </head>
+    {{block "sidebar" .}}
+        <p>Моя боковая панель!</p>
+    {{end}}
+    <body>
+        <header>
+            <h1><a href='/'>Те самые заметки</a></h1>
+        </header>
+        <nav>
+            <a href='/'>Домашняя страница</a>
+        </nav>
+        <main>
+            {{template "main" .}}
+        </main>
+        {{template "footer" .}}
+    </body>
+</html>
+{{end}}

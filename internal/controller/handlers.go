@@ -15,7 +15,13 @@ func Home(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	ts, err := template.ParseFiles("web/html/homePage.html")
+	files := []string{
+		"web/html/homePage.html",
+		"web/html/basePage.html",
+		"web/html/footer.html",
+	}
+
+	ts, err := template.ParseFiles(files...)
 	if err != nil {
 		log.Println(err)
 		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
