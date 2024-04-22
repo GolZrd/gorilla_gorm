@@ -33,8 +33,6 @@ func Home(w http.ResponseWriter, r *http.Request) {
 		log.Println(err)
 		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
 	}
-
-	w.Write([]byte("Welcome to your Home page!"))
 }
 
 func GetNotes(w http.ResponseWriter, r *http.Request) {
