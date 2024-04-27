@@ -6,10 +6,19 @@ import (
 	"net/http"
 
 	"github.com/gorilla/mux"
+	"gorm.io/gorm"
 )
 
+type handler struct {
+	DB *gorm.DB
+}
+
+func New(db *gorm.DB) handler {
+	return handler{db}
+}
+
 // home handler
-func Home(w http.ResponseWriter, r *http.Request) {
+func (h handler) Home(w http.ResponseWriter, r *http.Request) {
 	if r.URL.Path != "/" {
 		http.NotFound(w, r)
 		return
@@ -35,11 +44,11 @@ func Home(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func GetNotes(w http.ResponseWriter, r *http.Request) {
+func (h handler) GetNotes(w http.ResponseWriter, r *http.Request) {
 	w.Write([]byte("Здесь будут все записи из базы данных"))
 }
 
-func GetNote(w http.ResponseWriter, r *http.Request) {
+func (h handler) GetNote(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 
 	id := vars["id"]

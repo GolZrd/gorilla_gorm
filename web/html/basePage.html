@@ -7,15 +7,13 @@
         <link rel="stylesheet" href="/static/css/main.css">
         <link rel='shortcut icon' href='/static/img/favicon.ico' type='image/x-icon'>
     </head>
-    {{block "sidebar" .}}
-        <p>Моя боковая панель!</p>
-    {{end}}
     <body>
         <header>
             <h1><a href='/'>Те самые заметки</a></h1>
         </header>
         <nav>
             <a href='/'>Домашняя страница</a>
+            <a href='/notes'>Заметки</a>
         </nav>
         <main>
             {{template "main" .}}
