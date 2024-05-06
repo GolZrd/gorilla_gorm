@@ -8,7 +8,7 @@ import (
 )
 
 func Init() *gorm.DB {
-	conn := "user=postgres password=Egolgor23 dbname=productdb sslmode=disable"
+	conn := "user=postgres password=Egolgor23 dbname=webnotes sslmode=disable"
 	db, err := gorm.Open(postgres.Open(conn), &gorm.Config{})
 	if err != nil {
 		panic(err)

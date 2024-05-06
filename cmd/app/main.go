@@ -21,6 +21,9 @@ func main() {
 	router.HandleFunc("/", h.Home)
 	router.HandleFunc("/notes", h.GetNotes)
 	router.HandleFunc("/note/{id:[0-9]+}", h.GetNote).Methods("GET")
+	router.HandleFunc("/note/{id:[0-9]+}/update", h.UpdateNote)
+	router.HandleFunc("/create", h.CreateNote)
+	router.HandleFunc("/createtest", h.CreateTest)
 
 	router.PathPrefix("/static/").Handler(http.StripPrefix("/static/", http.FileServer(http.Dir("./web/static/"))))
 
@@ -33,8 +36,6 @@ func main() {
 		Handler:      logRouter,
 	}
 
-	//router.HandleFunc("/notes/create", controller.CreateNote).Methods("POST")
-	//router.HandleFunc("/note/{id:[0-9]+}/update", controller.UpdateNote).Methods("POST")
 	//router.HandleFunc("/note/{id:[0-9]+}/delete", controller.Delete).Methods("POST")
 
 	fmt.Println("Server started on port 8080")

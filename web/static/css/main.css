@@ -253,12 +253,12 @@ button:hover {
     display: inline-block;
 }
 
-.snippet .metadata time:first-child {
+.snippet .metadata time:only-child {
     float: left;
 }
 
 .snippet .metadata time:last-child {
-    float: right;
+    float: left;
 }
 
 div.flash {

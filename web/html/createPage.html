@@ -1,0 +1,19 @@
+{{template "base" .}}
+
+{{define "title"}}Создание заметки{{end}}
+
+{{define "main"}}
+
+<h2>Создание заметки</h2>
+<form action='/create' method='POST'>
+    <div>
+        <label for='title'>Заголовок:</label>
+        <input type='text' name='title' required>
+    </div>
+    <div>
+        <label for='content'>Содержание:</label>
+        <textarea name='content' required></textarea>
+    </div>
+    <button type='submit'>Создать</button>
+</form>
+{{end}}
