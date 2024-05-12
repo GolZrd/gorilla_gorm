@@ -244,6 +244,7 @@ button:hover {
     background-color: #FFFFFF;
     border: 1px solid #E4E5E7;
     border-radius: 3px;
+    margin-bottom: 36px;
 }
 
 .snippet pre {

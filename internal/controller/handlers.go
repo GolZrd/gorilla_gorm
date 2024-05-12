@@ -51,6 +51,9 @@ func (h handler) Home(w http.ResponseWriter, r *http.Request) {
 
 func (h handler) GetNotes(w http.ResponseWriter, r *http.Request) {
 
+	var Notes []database.Note
+	h.DB.Order("Created desc").Find(&Notes)
+
 	files := []string{
 		"web/html/notesPage.html",
 		"web/html/basePage.html",
@@ -64,7 +67,7 @@ func (h handler) GetNotes(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	err = ts.Execute(w, nil)
+	err = ts.Execute(w, Notes)
 	if err != nil {
 		log.Println(err)
 		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
