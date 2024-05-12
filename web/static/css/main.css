@@ -160,6 +160,24 @@ a.button:hover, input[type="submit"]:hover {
     text-decoration: none;
 }
 
+.del_button {
+    background-color: #c94531;
+    border-radius: 3px;
+    color: #FFFFFF;
+    padding: 18px 27px;
+    border: none;
+    display: inline-block;
+    margin-top: 18px;
+    font-weight: 700;
+}
+
+.del_button:hover{
+    background-color: #c94531;
+    color: #FFFFFF;
+    cursor: pointer;
+    text-decoration: none;
+}
+
 form div {
     margin-bottom: 18px;
 }
@@ -312,4 +330,8 @@ footer {
     height: 60px;
     color: #6A6C6F;
     text-align: center;
+}
+
+pre code {
+    white-space: pre-wrap
 }

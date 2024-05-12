@@ -1,0 +1,26 @@
+{{template "base" .}}
+
+{{define "title"}}Все заметки{{end}}
+
+{{define "main"}}
+
+<h2>Все заметки</h2>
+
+{{if .}}
+    {{range .}}
+    <div class='snippet'>
+        <div class='metadata'>
+            <a href='/note/{{.ID}}'><strong>{{.Title}}</strong></a>
+            <span>#{{.ID}}</span>
+        </div>
+        <pre><code>{{.Content}}</code></pre>
+        <div class='metadata'>
+            <time>Создана: {{.Created}}</time>
+        </div>
+    </div>
+{{end}}
+    {{else}}
+    <p>Здесь ничего нет</p>
+    {{end}}
+
+{{end}}

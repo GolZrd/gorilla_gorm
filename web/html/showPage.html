@@ -9,10 +9,12 @@
         <span>#{{.ID}}</span>
     </div>
     <pre><code>{{.Content}}</code></pre>
+    <!-- <textarea name='content' readonly>{{.Content}}</textarea> -->
     <div class='metadata'>
         <time>Создана: {{.Created}}</time>
     </div>
 </div>
 
 <a href='/note/{{.ID}}/update' class="button">Изменить</a>
+<a href='/note/{{.ID}}/delete' class="del_button">Удалить</a>
 {{end}}

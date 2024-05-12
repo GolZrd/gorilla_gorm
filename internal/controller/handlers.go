@@ -27,7 +27,7 @@ func (h handler) Home(w http.ResponseWriter, r *http.Request) {
 	}
 
 	var Notes []database.Note
-	h.DB.Find(&Notes)
+	h.DB.Order("Created desc").Find(&Notes)
 
 	files := []string{
 		"web/html/homePage.html",
@@ -50,7 +50,25 @@ func (h handler) Home(w http.ResponseWriter, r *http.Request) {
 }
 
 func (h handler) GetNotes(w http.ResponseWriter, r *http.Request) {
-	w.Write([]byte("Здесь будут все записи из базы данных"))
+
+	files := []string{
+		"web/html/notesPage.html",
+		"web/html/basePage.html",
+		"web/html/footer.html",
+	}
+
+	ts, err := template.ParseFiles(files...)
+	if err != nil {
+		log.Println(err)
+		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
+		return
+	}
+
+	err = ts.Execute(w, nil)
+	if err != nil {
+		log.Println(err)
+		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
+	}
 }
 
 func (h handler) GetNote(w http.ResponseWriter, r *http.Request) {
@@ -137,25 +155,51 @@ func (h handler) UpdateNote(w http.ResponseWriter, r *http.Request) {
 	upNote := database.Note{}
 	h.DB.First(&upNote, id)
 
-	files := []string{
-		"web/html/editPage.html",
-		"web/html/basePage.html",
-		"web/html/footer.html",
-	}
+	if r.Method == "POST" {
+		err := r.ParseForm()
+		if err != nil {
+			log.Println(err)
+			http.Error(w, "Internal Server Error", http.StatusInternalServerError)
+		}
 
-	ts, err := template.ParseFiles(files...)
-	if err != nil {
-		log.Println(err)
-		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
+		upNote.Title = r.FormValue("title")
+		upNote.Content = r.FormValue("content")
+
+		h.DB.Save(&upNote)
+		http.Redirect(w, r, "/", http.StatusMovedPermanently)
+	} else {
+		files := []string{
+			"web/html/editPage.html",
+			"web/html/basePage.html",
+			"web/html/footer.html",
+		}
+
+		ts, err := template.ParseFiles(files...)
+		if err != nil {
+			log.Println(err)
+			http.Error(w, "Internal Server Error", http.StatusInternalServerError)
+			return
+		}
+
+		err = ts.Execute(w, upNote)
+		if err != nil {
+			log.Println(err)
+			http.Error(w, "Internal Server Error", http.StatusInternalServerError)
+		}
+	}
+}
+
+func (h handler) DeleteNote(w http.ResponseWriter, r *http.Request) {
+	vars := mux.Vars(r)
+	id := vars["id"]
+
+	res := h.DB.Delete(&database.Note{}, id)
+	if res.Error != nil {
+		log.Println(res.Error)
+		http.Error(w, http.StatusText(404), http.StatusNotFound)
 		return
 	}
-
-	err = ts.Execute(w, upNote)
-	if err != nil {
-		log.Println(err)
-		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
-	}
-
+	http.Redirect(w, r, "/", http.StatusMovedPermanently)
 }
 
 func (h handler) CreateTest(w http.ResponseWriter, r *http.Request) {
@@ -164,9 +208,3 @@ func (h handler) CreateTest(w http.ResponseWriter, r *http.Request) {
 	h.DB.Create(&newNote)
 	http.Redirect(w, r, "/", http.StatusMovedPermanently)
 }
-
-//Редактирование заметки
-// func UpdateNote(w http.ResponseWriter, r *http.Request) {}
-
-//Удаление заметки
-// func Delete(w http.ResponseWriter, r *http.Request) {}

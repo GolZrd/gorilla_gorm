@@ -22,6 +22,7 @@ func main() {
 	router.HandleFunc("/notes", h.GetNotes)
 	router.HandleFunc("/note/{id:[0-9]+}", h.GetNote).Methods("GET")
 	router.HandleFunc("/note/{id:[0-9]+}/update", h.UpdateNote)
+	router.HandleFunc("/note/{id:[0-9]+}/delete", h.DeleteNote)
 	router.HandleFunc("/create", h.CreateNote)
 	router.HandleFunc("/createtest", h.CreateTest)
 
@@ -35,8 +36,6 @@ func main() {
 		WriteTimeout: 10 * time.Second,
 		Handler:      logRouter,
 	}
-
-	//router.HandleFunc("/note/{id:[0-9]+}/delete", controller.Delete).Methods("POST")
 
 	fmt.Println("Server started on port 8080")
 	srv.ListenAndServe()

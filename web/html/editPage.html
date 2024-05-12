@@ -5,7 +5,7 @@
 {{define "main"}}
 
 <h2>Редактирование заметки</h2>
-<form action='/note/{id:[0-9]+}/update' method='POST'>
+<form action='/note/{{.ID}}/update' method='POST'>
     <div>
         <label for='title'>Заголовок:</label>
         <input type='text' name='title' value="{{.Title}}" required>
